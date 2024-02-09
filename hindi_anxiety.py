@@ -144,7 +144,7 @@ def get_user_info():
 def main():
     st.image("HLS-removebg-preview.png", width = 150)
     st.header("HappiLIFE Screening")
-    st.header("चिंता मापनी (Anxiety Test)")
+    st.header("चिंता टेस्ट (Anxiety Test)")
     
     st.subheader("पहला कदम जो आपकी भावनात्मक और मानसिक स्वास्थ्य का  मूल्यांकन करने में आपकी मदद करता है।")
     st.divider()
