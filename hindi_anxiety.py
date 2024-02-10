@@ -14,13 +14,13 @@ worksheet = spreadsheet.get_worksheet(1)  # Assuming the data is in the first wo
 
 def categorize_stress_level(total_score):
     if total_score <= 4:
-        return st.title("आपका चिंता स्तर न्यूनतम है।")
+        return st.title("आपका चिंता स्तर न्यूनतम है। (You have minimal anxiety)")
     elif 5 <= total_score <= 9:
-        return "आपका चिंता स्तर हल्का है।"
+        return "आपका चिंता स्तर कम है। (You have mild anxiety)"
     elif 10 <= total_score <= 14:
-        return "आपका चिंता स्तर मध्यम है।"
+        return "आपका चिंता स्तर मध्यम है। (You have moderate anxiety)"
     else:
-        return "आपका चिंता स्तर गंभीर है।"
+        return "आपका चिंता स्तर गंभीर है। (You have severe anxiety)"
 
 
 def submit_survey_data(name, email, mobile_number, company_name, total_score, stress_level):
@@ -136,7 +136,7 @@ def get_user_info():
     
     # Validate that name, email, mobile_number, and company_name are not empty
     if not name.strip() or not email.strip() or not mobile_number.strip() or not company_name.strip():
-        st.warning("कृपया सभी विवरण भरें।")
+        st.warning("कृपया सभी विकल्प भरें।")
         return None, None, None, None
 
     return name, email, mobile_number, company_name    
@@ -146,7 +146,7 @@ def main():
     st.header("HappiLIFE Screening")
     st.header("चिंता टेस्ट (Anxiety Test)")
     
-    st.subheader("पहला कदम जो आपकी भावनात्मक और मानसिक स्वास्थ्य का  मूल्यांकन करने में आपकी मदद करता है।")
+    st.subheader("पहला कदम जो आपकी भावनात्मक और मानसिक स्वास्थ्य का मूल्यांकन करने में आपकी मदद करता है।")
     st.divider()
     
     # First question
@@ -177,8 +177,13 @@ def main():
     score7 = survey_question_7()
     st.divider()
     
+    st.markdown("अपना जानकारी हमारे साथ साझा करें ताकि हम आपसे संपर्क कर आपकी सहायता कर सकें।")
+    st.markdown("(Share your details so that we can connect and help you)")
+    
     # Collect user information
     name, email, mobile_number, company_name = get_user_info()
+    
+    
     
     # Handle the case where no option is selected for any question
     if any(score is None for score in [score1, score2, score3, score4, score5, score6, score7, name, email, mobile_number, company_name]):
@@ -189,7 +194,7 @@ def main():
     total_score = score1 + score2 + score3 + score4 + score5 + score6 + score7
     
     # Display total score
-    st.subheader(f"आपका तनाव स्कोर 21 में से {total_score} है")
+    st.subheader(f"आपका चिंता स्कोर 21 में से {total_score} है। (Your anxiety score is {total_score})")
 
     # Categorize stress level and display result
     stress_level = categorize_stress_level(total_score)
