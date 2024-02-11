@@ -26,7 +26,7 @@ def categorize_stress_level(total_score):
 def submit_survey_data(name, email, mobile_number, company_name, total_score, stress_level):
     data = [name, email, mobile_number, company_name, total_score, stress_level]
     worksheet.append_row(data)
-    st.success("Data submitted successfully!")
+    st.success("Your request is submitted successfully!")
     
 def survey_question_1():
     st.markdown("Q1. पिछले 2 सप्ताहों में, आपने कितनी बार  चिंता या घबराहट महसूस की है?")
@@ -127,7 +127,6 @@ def survey_question_7():
     return score
 
 
-
 def get_user_info():
     name = st.text_input("नाम (Name):")
     email = st.text_input("ईमेल आईडी (Email ID):")
@@ -177,12 +176,11 @@ def main():
     score7 = survey_question_7()
     st.divider()
     
-    st.markdown("अपना जानकारी हमारे साथ साझा करें ताकि हम आपसे संपर्क कर आपकी सहायता कर सकें।")
+    st.markdown("अपनी जानकारी हमारे साथ साझा करें ताकि हम आपसे संपर्क कर आपकी सहायता कर सकें।")
     st.markdown("(Share your details so that we can connect and help you)")
     
     # Collect user information
     name, email, mobile_number, company_name = get_user_info()
-    
     
     
     # Handle the case where no option is selected for any question
@@ -201,7 +199,7 @@ def main():
     st.subheader(f"{stress_level}")
 
 # Submit data to Google Sheets
-    if st.button("Submit"):
+    if st.button("Know more"):
         submit_survey_data(name, email, mobile_number, company_name, total_score, stress_level)
  
 if __name__ == "__main__":
