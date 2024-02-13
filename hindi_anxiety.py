@@ -14,7 +14,7 @@ client = gspread.authorize(creds)
 spreadsheet = client.open_by_key("1YpIAgkk9nkpczG6U9k-f2aafMy0Tn3Fmu-JJ-O278TY")
 worksheet = spreadsheet.get_worksheet(1)  # Assuming the data is in the first worksheet
 
-def categorize_stress_level(total_score):
+def categorize_anxiety_level(total_score):
     if total_score <= 4:
         return st.title("आपका चिंता स्तर न्यूनतम है। (You have minimal anxiety)")
     elif 5 <= total_score <= 9:
@@ -25,12 +25,12 @@ def categorize_stress_level(total_score):
         return "आपका चिंता स्तर गंभीर है। (You have severe anxiety)"
 
 
-def submit_survey_data(name, email, mobile_number, company_name, total_score, stress_level):
+def submit_survey_data(name, email, mobile_number, company_name, total_score, anxiety_level):
     current_datetime = datetime.now()
     formatted_date = current_datetime.strftime("%d/%m/%Y")
     formatted_time = current_datetime.strftime("%H:%M:%S")
     
-    data = [formatted_date, formatted_time, name, email, mobile_number, company_name, total_score, stress_level]
+    data = [formatted_date, formatted_time, name, email, mobile_number, company_name, total_score, anxiety_level]
     worksheet.append_row(data)
     st.success("Your request is submitted successfully!")
 
@@ -218,12 +218,12 @@ def main():
     st.subheader(f"आपका चिंता स्कोर 21 में से {total_score} है। (Your anxiety score is {total_score})")
 
     # Categorize stress level and display result
-    stress_level = categorize_stress_level(total_score)
-    st.subheader(f"{stress_level}")
+    anxiety_level = categorize_anxiety_level(total_score)
+    st.subheader(f"{anxiety_level}")
 
 # Submit data to Google Sheets
     if st.button("Know more"):
-        submit_survey_data(name, email, mobile_number, company_name, total_score, stress_level)
+        submit_survey_data(name, email, mobile_number, company_name, total_score, anxiety_level)
  
 if __name__ == "__main__":
     main()
