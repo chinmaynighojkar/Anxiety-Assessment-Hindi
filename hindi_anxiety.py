@@ -1,6 +1,8 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import streamlit as st
+import re
+from datetime import datetime
 
 # Set up Google Sheets API credentials
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -24,9 +26,14 @@ def categorize_stress_level(total_score):
 
 
 def submit_survey_data(name, email, mobile_number, company_name, total_score, stress_level):
-    data = [name, email, mobile_number, company_name, total_score, stress_level]
+    current_datetime = datetime.now()
+    formatted_date = current_datetime.strftime("%d/%m/%Y")
+    formatted_time = current_datetime.strftime("%H:%M:%S")
+    
+    data = [formatted_date, formatted_time, name, email, mobile_number, company_name, total_score, stress_level]
     worksheet.append_row(data)
     st.success("Your request is submitted successfully!")
+
     
 def survey_question_1():
     st.markdown("Q1. पिछले 2 सप्ताहों में, आपने कितनी बार  चिंता या घबराहट महसूस की है?")
@@ -126,6 +133,11 @@ def survey_question_7():
     
     return score
 
+def is_valid_email(email):
+    return '@' in email and ' ' not in email
+
+def is_valid_mobile_number(mobile_number):
+    return mobile_number.isdigit()
 
 def get_user_info():
     name = st.text_input("नाम (Name):")
@@ -134,6 +146,17 @@ def get_user_info():
     company_name = st.text_input("कंपनी/इंस्टीट्यूट का नाम (Company/Institute Name):")
     
     # Validate that name, email, mobile_number, and company_name are not empty
+    if not email.strip():
+        st.warning("Please enter an email.")
+    elif not is_valid_email(email):
+        st.warning("Invalid email format. Make sure it contains '@' and has no spaces.")
+
+    # Validate mobile number
+    if not mobile_number.strip():
+        st.warning("Please enter a mobile number.")
+    elif not is_valid_mobile_number(mobile_number):
+        st.warning("Invalid mobile number format. It should contain only numbers.")
+    
     if not name.strip() or not email.strip() or not mobile_number.strip() or not company_name.strip():
         st.warning("कृपया सभी विकल्प भरें।")
         return None, None, None, None
